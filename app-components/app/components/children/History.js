@@ -6,7 +6,7 @@ var History = React.createClass({
   // Here we describe this component's render method
   render: function() {
     return (
-     <h6><center>ARE THERE MORE THAN 3 SPOTS AVAILABLE?</center></h6>
+     <h6><center><strong><h2>ARE THERE MORE THAN 3 SPOTS AVAILABLE?</h2></strong></center></h6>
 <div class="rowButtons">
   <div class="col-md-3"></div>
 
@@ -18,14 +18,14 @@ var History = React.createClass({
   
   <div class="col-md-3"></div>
 
-          {/* Here we use a map function to loop through an array in JSX */}
-          {this.props.history.map(function(search, i) {
-            return (
-              <p key={i}>{search.location} - {search.date}</p>
-            );
-          })}
-        </div>
-      </div>
+         // {/* Here we use a map function to loop through an array in JSX */}
+         // {this.props.history.map(function(search, i) {
+          //  return (
+          //    <p key={i}>{search.location} - {search.date}</p>
+         //   );
+         // })}
+      //  </div>
+     // </div>
     );
   }
 });
