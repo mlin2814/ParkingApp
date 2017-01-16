@@ -1,0 +1,27 @@
+{
+  "name": "parkingapp",
+  "version": "1.0.0",
+  "description": "Contains npm packages for application",
+  "main": "index.js",
+  "dependencies": {
+    "invariant": "^2.2.2",
+    "react": "^15.4.2",
+    "react-native": "^0.40.0",
+    "react-native-cli": "^2.0.1",
+    "react-native-maps": "^0.12.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monkman06/ParkingApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Monkman06/ParkingApp/issues"
+  },
+  "homepage": "https://github.com/Monkman06/ParkingApp#readme"
+}
