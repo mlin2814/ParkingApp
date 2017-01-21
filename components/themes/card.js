@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
-import { Container, Content, Card, CardItem, Thumbnail, Text, Button } from 'native-base';
+import { MapView } from 'react-native';
+import { Container, Content, Card, MapView, Button } from 'native-base';
 ​
-export default class CardShowcaseExample extends Component {
+export default MapMyRide extends Component {
     render() {
         return (
             <Container>
                 <Content>
                     <Card style={{ flex: 0 }}>
                         <CardItem>
-                            <Thumbnail source={require('./img/NB-logo.png')} />
+                               <MapView
+                               style={{height: 200, margin: 40}}
+                                showsUserLocation={true}/>
                             
                         </CardItem>
 
