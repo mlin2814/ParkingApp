@@ -3,6 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
+'use strict';
 
 import React, { Component } from 'react';
 import {
@@ -14,99 +15,75 @@ import {
   View,
 } from 'react-native';
 
-var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+exports.framework = 'React';
+exports.title = 'Geolocation';
+exports.description = 'Examples of using the Geolocation API.';
 
-export default class ParkingApp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
-      loaded: false,
-    };
+exports.examples = [
+  {
+    title: 'navigator.geolocation',
+    render: function(): React.Element<any> {
+      return <ParkingApp />;
+    },
   }
+];
+
+class ParkingApp extends React.Component {
+  state = {
+    initialPosition: 'unknown',
+    lastPosition: 'unknown',
+  };
+
+
+  watchID: ?number = null;
+
   componentDidMount() {
-    this.fetchData();
-  }
-  fetchData() {
-    fetch(REQUEST_URL)
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
-          loaded: true,
-        });
-      })
-      .done();
-  }
-  render() {
-    if (!this.state.loaded) {
-      return this.renderLoadingView();
-    }
 
-    return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderMovie}
-        style={styles.listView}
-      />
-    );
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        //create array getCoords
+        var getCoords = [position.coords.longitude,position.coords.latitude];
+        console.log(getCoords);
+        
+        var initialPosition = getCoords.toString();
+        this.setState({initialPosition:initialPosition});
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    ); 
+      this.watchID = navigator.geolocation.watchPosition((position) => {
+        var getCoords = [position.coords.longitude,position.coords.latitude];
+        console.log(getCoords);
+        
+        var lastPosition = getCoords.toString();
+        this.setState({lastPosition:lastPosition});
+    });
   }
-  renderLoadingView() {
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text>
-          Loading movies...
+          <Text style={styles.title}>Initial position: </Text>
+          {this.state.initialPosition}
         </Text>
-      </View>
-    );
-  }
-  renderMovie(movie) {
-    return (
-      <View style={styles.container}>
-        <Image
-          source={{uri: movie.posters.thumbnail}}
-          style={styles.thumbnail}
-        />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{movie.title}</Text>
-          <Text style={styles.year}>{movie.year}</Text>
-        </View>
+        <Text>
+          <Text style={styles.title}>Current position: </Text>
+          {this.state.lastPosition}
+        </Text>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  rightContainer: {
-    flex: 1,
-    // backgroundColor: 'yellow',
-  },
+var styles = StyleSheet.create({
   title: {
-    fontSize: 20,
-    marginBottom: 8,
-    textAlign: 'center',
+    fontWeight: '500',
   },
-  year: {
-    textAlign: 'center',
-  },
-  thumbnail: {
-    width: 53,
-    height: 81,
-  },
-  listView: {
-    paddingTop: 20,
-    backgroundColor: '#F5FCFF',
-  },
-
 });
 
 AppRegistry.registerComponent('ParkingApp', () => ParkingApp);
