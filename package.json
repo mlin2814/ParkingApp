@@ -1,7 +1,7 @@
 {
-  "name": "parkingapp",
+  "name": "ParkingApp",
   "version": "1.0.0",
-  "description": "Contains npm packages for application",
+  "description": "An app that allows users to share the location of available parking spots.",
   "main": "index.js",
   "dependencies": {
     "invariant": "^2.2.2",
@@ -18,6 +18,9 @@
     "type": "git",
     "url": "git+https://github.com/Monkman06/ParkingApp.git"
   },
+
+  "keywords": [],
+
   "author": "",
   "license": "ISC",
   "bugs": {
