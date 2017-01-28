@@ -21,6 +21,10 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 let id = 0;
 
+let openSpots = 0;
+let lng = 0;
+let lat = 0;
+
 function log(eventName, e) {
   console.log(eventName, e.nativeEvent);
 }
@@ -40,8 +44,16 @@ class Marker extends React.Component {
     };
   }
 
+ 
+
   onMapPress(e) {
-    console.log(e)
+  
+    console.log(e.nativeEvent.coordinate);
+    lng = e.nativeEvent.coordinate.longitude;
+    lat = e.nativeEvent.coordinate.latitude;
+
+    this.saveData(1);
+
     this.setState({
       markers: [
         ...this.state.markers,
@@ -49,10 +61,33 @@ class Marker extends React.Component {
           coordinate: e.nativeEvent.coordinate,
           key: id++,
           marker1: true,
-        },
+         openSpots: 0,
+        }, 
       ],
     });
   }
+
+
+
+saveData(openspots) {
+
+  fetch('https://parkingserver.herokuapp.com/api/markers/', {  
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+         username: 'rfahey', //hard coded username until we set up authentication
+         longitude: lng,
+         latitude: lat,
+         multiplespots: openspots
+      })
+    })
+  openSpots: 0;  //reset
+}
+
+
   render() {
     return (
       <View style={styles.container}>
